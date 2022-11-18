@@ -1,0 +1,272 @@
+.split {
+  display: flex;
+  width: 100%;
+  height: auto;
+  position: relative;
+  border-radius: 4px;
+
+  &--horizontal {
+    flex-direction: row;
+  }
+
+  &--vertical {
+    flex-direction: column;
+  }
+}
+
+.split-pane {
+  position: relative;
+  flex: 1 1 auto;
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 0;
+  max-height: 100%;
+
+  &--fixed {
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
+
+  &--hidden {
+    flex: 0 !important;
+    overflow: hidden !important;
+  }
+
+  &--grow {
+    flex-grow: 1 !important;
+  }
+}
+
+.split-bar {
+  background-color: pink;
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 0;
+  flex-shrink: 0;
+
+  .split__collapse {
+    background-color: rgb(237, 131, 148);
+    position: absolute;
+    z-index: 15;
+    cursor: pointer;
+
+    &::before,
+    &::after {
+      content: '';
+      width: 10px;
+      height: 2px;
+      background: #f1b0b0;
+      display: block;
+      position: absolute;
+    }
+
+    &:hover {
+      background-color: rgb(248, 221, 226);
+    }
+  }
+
+  &--horizontal {
+    .split__collapse {
+      width: 12px;
+      height: 30px;
+
+      &.prev,
+      &.next {
+        &.hidden {
+          display: none;
+        }
+      }
+
+      &.prev {
+        border-radius: 0 4 4 0;
+        left: 100%;
+
+        &::before,
+        &.collapsed::before {
+          top: 9px;
+          left: 1px;
+        }
+
+        &::before {
+          transform: rotate(-70deg);
+        }
+
+        &.collapsed::before {
+          transform: rotate(70deg);
+        }
+
+        &::after,
+        &.collapsed::after {
+          top: 18px;
+          left: 1px;
+        }
+
+        &::after {
+          transform: rotate(70deg);
+        }
+
+        &.collapsed::after {
+          transform: rotate(-70deg);
+        }
+      }
+
+      &.next {
+        border-radius: 4 0 0 4;
+        right: 100%;
+
+        &::before,
+        &.collapsed::before {
+          top: 9px;
+          right: 1px;
+        }
+
+        &::before {
+          transform: rotate(70deg);
+        }
+
+        &.collapsed::before {
+          transform: rotate(-70deg);
+        }
+
+        &::after,
+        &.collapsed::after {
+          top: 18px;
+          right: 1px;
+        }
+
+        &::after {
+          transform: rotate(-70deg);
+        }
+
+        &.collapsed::after {
+          transform: rotate(70deg);
+        }
+      }
+    }
+  }
+
+  &--vertical {
+    .split__collapse {
+      height: 12px;
+      width: 30px;
+
+      &.prev,
+      &.next {
+        &.hidden {
+          display: none;
+        }
+      }
+
+      &.prev {
+        border-radius: 0 0 4 4;
+        top: 100%;
+
+        &::before,
+        &.collapsed::before {
+          bottom: 5px;
+          left: 5px;
+        }
+
+        &::before {
+          transform: rotate(-20deg);
+        }
+
+        &.collapsed::before {
+          transform: rotate(20deg);
+        }
+
+        &::after,
+        &.collapsed::after {
+          bottom: 5px;
+          left: 14px;
+        }
+
+        &::after {
+          transform: rotate(20deg);
+        }
+
+        &.collapsed::after {
+          transform: rotate(-20deg);
+        }
+      }
+
+      &.next {
+        border-radius: 4 4 0 0;
+        bottom: 100%;
+
+        &::before,
+        &.collapsed::before {
+          top: 5px;
+          left: 5px;
+        }
+
+        &::before {
+          transform: rotate(20deg);
+        }
+
+        &.collapsed::before {
+          transform: rotate(-20deg);
+          top: 5px;
+          left: 5px;
+        }
+
+        &::after,
+        &.collapsed::after {
+          top: 5px;
+          left: 14px;
+        }
+
+        &::after {
+          transform: rotate(-20deg);
+        }
+
+        &.collapsed::after {
+          transform: rotate(20deg);
+        }
+      }
+    }
+  }
+
+  &--horizontal.resizable:not(.none-resizable),
+  &--vertical.resizable:not(.none-resizable) {
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: rgb(248, 221, 226);
+    }
+
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      z-index: 10;
+    }
+  }
+
+  &--horizontal.resizable {
+    // 修正IE浏览器，css伪元素中鼠标手型无效
+    cursor: col-resize;
+
+    &::after {
+      cursor: col-resize;
+      height: 100%;
+      width: 10px;
+      top: 0;
+    }
+  }
+
+  &--vertical.resizable {
+    cursor: row-resize;
+
+    &::after {
+      cursor: row-resize;
+      width: 100%;
+      height: 10px;
+      left: 0;
+    }
+  }
+}
